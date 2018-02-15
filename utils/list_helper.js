@@ -1,6 +1,6 @@
-const HashMap = require('hashmap');
+const HashMap = require('hashmap')
 
-const dummy = (blogs) => {
+const dummy = () => {
     return 1
 }
 
@@ -35,7 +35,7 @@ const mostBlogs = (blogs) => {
         }
     }
 
-    let writer = ""
+    let writer = ''
     let max = 0
 
     writers.forEach(function (value, key) {
@@ -66,7 +66,7 @@ const mostLikes = (blogs) => {
         }
     }
 
-    let writer = ""
+    let writer = ''
     let max = 0
 
     writers.forEach(function (value, key) {

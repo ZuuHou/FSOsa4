@@ -1,0 +1,33 @@
+{
+  "name": "fsosa4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "test": "jest --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZuuHou/FSOsa4.git"
+  },
+  "author": "Juho Niittylä",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ZuuHou/FSOsa4/issues"
+  },
+  "homepage": "https://github.com/ZuuHou/FSOsa4#readme",
+  "devDependencies": {
+    "jest": "^22.3.0",
+    "nodemon": "^1.14.12"
+  },
+  "dependencies": {
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.0",
+    "express": "^4.16.2",
+    "hashmap": "^2.3.0",
+    "mongoose": "^5.0.5",
+    "morgan": "^1.9.0"
+  }
+}

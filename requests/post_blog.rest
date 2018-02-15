@@ -1,0 +1,6 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+"title": "Jampanturinat", "author": "Jamppa", "url": "www", "likes":"0"
+}

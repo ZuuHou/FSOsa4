@@ -1,6 +1,11 @@
-POST http://localhost:3001/api/blogs
+POST http://localhost:3001/api/blogs/
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkphbXBwYSIsImlkIjoiNWE5MzIxMmM4NTc1OWY1ZTZkOGFmNDMxIiwiaWF0IjoxNTE5NTk0MzI0fQ.I4rYF_z-akvuvT1WO7pigbjUyTZFHPrrc8x4V9NfibA
 
 {
-"title": "Jampanturinat", "author": "Jamppa", "url": "www", "likes":"0"
+"title": "Testataan tokeni",
+ "author": "Jamppa",
+  "url": "www",
+   "likes":"66",
+   "userId": "5a93212c85759f5e6d8af431"
 }

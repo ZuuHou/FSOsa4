@@ -6,7 +6,18 @@ const mongoose = require('mongoose')
 const middleware = require('./utils/middleware')
 const cors = require('cors')
 const blogsRouter = require('./controllers/blogs')
+const usersRouter = require('./controllers/users')
+const loginRouter = require('./controllers/login')
 const config = require('./utils/config')
+
+app.use(cors())
+app.use(bodyParser.json())
+app.use(express.static('build'))
+app.use('/api/blogs', blogsRouter)
+app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
+app.use(middleware.logger)
+app.use(middleware.error)
 
 mongoose
     .connect(config.mongoUrl)
@@ -18,13 +29,6 @@ mongoose
     })
 
 mongoose.Promise = global.Promise
-
-app.use(cors())
-app.use(bodyParser.json())
-app.use(express.static('build'))
-app.use('/api/blogs', blogsRouter)
-app.use(middleware.logger)
-app.use(middleware.error)
 
 const server = http.createServer(app)
 

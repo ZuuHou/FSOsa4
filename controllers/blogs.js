@@ -3,14 +3,6 @@ const Blog = require('../models/blog')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
-const getTokenFrom = (request) => {
-    const authorization = request.get('authorization')
-    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-        return authorization.substring(7)
-    }
-    return null
-}
-
 blogsRouter.get('/', async (request, response) => {
     const blogs = await Blog
         .find({})
@@ -22,10 +14,8 @@ blogsRouter.post('/', async (request, response) => {
     const body = request.body
 
     try {
-        const token = getTokenFrom(request)
-        console.log(token)
+        const token = request.token
         const decodedToken = jwt.verify(token, process.env.SECRET)
-        console.log(decodedToken)
 
         if (!token || !decodedToken.id) {
             return response.status(401).json({ error: 'token missing or invalid' })
@@ -36,11 +26,7 @@ blogsRouter.post('/', async (request, response) => {
         }
 
         const user = await User
-        .findById(decodedToken.id)
-
-        console.log('token')
-        console.log(decodedToken)
-        console.log(user)
+            .findById(decodedToken.id)
 
         const blog = new Blog({
             author: body.author,
@@ -82,7 +68,23 @@ blogsRouter.get('/:id', async (request, response) => {
 
 blogsRouter.delete('/:id', async (request, response) => {
     try {
-        await Blog.findByIdAndRemove(request.params.id)
+        const token = request.token
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+
+        if (!token || !decodedToken.id) {
+            return response.status(401).json({ error: 'token missing or invalid' })
+        }
+
+        const user = await User.findById(decodedToken.id)
+        const blog = await Blog.findById(request.params.id)
+
+        if (blog.user.toString() === user._id.toString()) {
+            await Blog.findByIdAndRemove(request.params.id)
+        } else {
+            return response.status(401).json({ error: 'token missing or invalid' })
+        }
+
+
 
         response.status(204).end()
     } catch (exception) {

@@ -33,6 +33,7 @@ blogsRouter.post('/', async (request, response) => {
             title: body.title,
             url: body.url,
             likes: body.likes === undefined ? 0 : body.likes,
+            comments: [],
             user: user._id
         })
         const savedBlog = await blog.save()
@@ -94,25 +95,10 @@ blogsRouter.delete('/:id', async (request, response) => {
 })
 
 blogsRouter.put('/:id', async (request, response) => {
-    try {
-        const body = request.body
-        const blog = {
-            title: body.title,
-            author: body.author,
-            url: body.url,
-            likes: body.likes,
-            id: body._id
-        }
+    const { title, author, url, likes, comments } = request.body
+    const blog = await Blog.findByIdAndUpdate(request.params.id, { title, author, url, likes, comments } , { new: true })
 
-        await Blog
-            .findByIdAndUpdate(request.params.id, blog, { new: true })
-        response.json(Blog.format(blog))
-
-
-    } catch (exception) {
-        console.log(exception)
-        response.status(400).send({ error: 'malformatted if' })
-    }
+    response.send(blog)
 })
 
 module.exports = blogsRouter
